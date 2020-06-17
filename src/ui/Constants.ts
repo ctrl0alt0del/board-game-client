@@ -1,0 +1,1 @@
+export const PLAYER_ACTION_MENU_ID = 'player_action_menu_id';

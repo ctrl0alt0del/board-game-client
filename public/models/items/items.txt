@@ -1,0 +1,25 @@
+#
+type=WEAPON
+name="Гладкоствольний Карабін"
+description="Перед боєм можеш потрати 1 кришку. Якщо ти цього не зробиш, ти не можеш отримувати право перекида в цьому бою."
+rerolls=PA
+ranged=TRUE
+cost=4
+activeType=LOOT
+image="/text/items/karabin.png"
+effects={
+    effect_1={
+        name=spend_caps_effect
+        start=start_phase(Combat)
+        end=end_phase(Combat)
+        application=SideEffect
+        action=do_spend_caps(1 to_have_rerolls)
+    }
+    effect_2={
+        name=disable_reroll_effect
+        start=start_phase(Combat)
+        end=end_phase(Combat)
+        application=RerollsCount
+        operation=if_(is_effect_outcome(effect_1 FALSE) replace(0) no_op())
+    }
+}

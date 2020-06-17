@@ -1,0 +1,26 @@
+
+.player-action-menu-item {
+    background: url("/text/action_button_overlay.png") repeat, #447AB9;
+    background-size: contain;
+    border-radius: 100%;
+    color: black;
+    width: 136px;
+    text-align: center;
+    height: 80px;
+    position: absolute;
+    left: -40px;
+    top: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 80px;
+    max-height: 80px;
+    box-shadow: 2px 3px 2px rgba(14, 14, 14, .64);
+    cursor: pointer;
+
+}
+
+.player-action-menu-item i {
+    font-size: 2.4rem;
+    color: #FEF265;
+}

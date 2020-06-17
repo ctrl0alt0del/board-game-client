@@ -1,0 +1,354 @@
+@import "../import.less";
+
+#combat-overlay {
+    position: relative;
+    z-index : 20;
+    #combat-roll-overlay-container {
+        #combat-rerolls-count-wrapper{
+            position: fixed;
+            bottom: 500px;
+            left: 20%;
+            display: flex;
+            align-items: center;
+            color: rgb(0, 200, 0);
+            background-color: rgba(0,40,0,.85);
+            padding: 12px 32px 16px;
+            border: 2px solid rgb(0,200,0);
+            font-family: "Fallout console";
+        }
+    }
+    #fight-bar-text {
+        position   : fixed;
+        top        : 90px;
+        left       : 0;
+        width      : 100%;
+        text-align : center;
+        font-size  : 32px;
+        font-family: "Fallout ru";
+        color      : rgb(192, 171, 80);
+        font-weight: 400;
+        text-shadow: 1px 1px 2px 0px #0003;
+        animation  : fight_bar_text 2s forwards;
+    }
+
+    #fight-bar-wrapper {
+        display : flex;
+        padding : 40px 0;
+        filter  : drop-shadow(1px 1px 2px #000);
+        position: fixed;
+        top     : 100px;
+        left    : calc(50% - 485px);
+
+        img {
+            flex: 1;
+
+            &:first-child {
+                animation: combat_left_bar 2s forwards;
+            }
+
+            &:nth-child(2) {
+                animation: combat_right_bar 2s forwards;
+            }
+        }
+    }
+
+    #start-combat-overlay {
+        position       : fixed;
+        height         : 100%;
+        width          : 100%;
+        top            : 0;
+        left           : 0;
+        z-index        : 1000;
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        align-items    : center;
+        padding-top    : 100px;
+
+        #canvas-effect-wrapper {
+            position: relative;
+
+            #vs_text {
+                position       : absolute;
+                height         : 100%;
+                width          : 100%;
+                top            : 0;
+                left           : 0;
+                color          : black;
+                font-size      : 144px;
+                font-family    : "Fallout";
+                animation      : vs_animation .2s;
+                opacity        : 1;
+                display        : flex;
+                flex-direction : column;
+                justify-content: center;
+                align-items    : center;
+            }
+
+            .combat_participant_wrapper {
+                position       : absolute;
+                top            : 0px;
+                height         : 100%;
+                display        : flex;
+                flex-direction : column;
+                justify-content: center;
+                align-items    : center;
+                animation      : vs_animation .4s;
+                width          : 50%;
+                overflow       : hidden;
+
+                img {
+                    height: 65%;
+                }
+            }
+
+            #combat_player_image {
+                left: 100px;
+
+
+                img {
+                    animation: combat_player_img 10s .7s forwards;
+                }
+            }
+
+            #combat_enemy_image {
+                right: 100px;
+
+                img {
+                    animation: combat_enemy_img 10s .7s forwards;
+                }
+            }
+        }
+    }
+
+    #enemy-in-combat-info {
+        position : fixed;
+        top      : 25%;
+        left     : 0;
+        width    : 15%;
+        font-size: .7rem;
+        padding  : 16px 24px;
+
+        .old-screen-border;
+
+        .pixalated-effect(100%, 0px);
+
+        .enemy-in-combat-info-line {
+            display    : flex;
+            align-items: center;
+            margin: 14px 0;
+            #enemy-in-combat-info-image{
+                width: 50%;
+            }
+
+            span {
+                font-family: "Fallout console";
+                color      : rgb(0, 200, 0);
+            }
+
+            .inline-image {
+                display: inline-block;
+                width  : 3vh;
+                .to-pipboy-image;
+            }
+        }
+    }
+
+    #combat-buttons-wrapper {
+        position: fixed;
+        bottom  : 45%;
+        right   : .5%;
+        width   : 900px;
+        height  : 400px;
+        padding : 7px 7px;
+        .pixalated-effect(100%, 0px);
+        box-shadow: 0px 2px 10px 3px rgba(0, 0, 0, .6);
+        animation : slide_left 2s ease-out;
+        
+        .old-screen-border(15px);
+
+        #combat-pda-content {
+            display       : flex;
+            align-items   : flex-start;
+            width         : 100%;
+            height        : 100%;
+            font-family   : "Fallout console";
+            letter-spacing: .4px;
+            color         : rgb(0, 200, 0);
+
+            #combat-pda-left-side {
+                flex        : 1 1 auto;
+                border-right: 3px solid rgb(0, 200, 0);
+                margin      : 10px 0;
+            }
+
+            #combat-pda-right-side {
+                flex       : 2 1 60%;
+                overflow-y : auto;
+                font-weight: bold;
+                height     : 100%;
+                overflow   : hidden;
+
+                #combat-pda-right-side-title {
+                    border-bottom : 3px solid rgb(0, 200, 0);
+                    text-transform: uppercase;
+                    padding       : 6px 4px;
+                    text-align    : center;
+                    width         : 100%;
+                }
+
+                #combat-pad-right-side-body {
+                    padding        : 12px 24px;
+                    font-size      : .5rem;
+                    display        : flex;
+                    justify-content: space-between;
+                    line-height    : 1.2;
+                    word-break     : break-word;
+                    align-items    : flex-start;
+                    height         : 100%;
+                    overflow       : auto;
+
+                    p {
+                        margin      : 0;
+                        text-align  : justify;
+                        text-justify: newspaper;
+
+                        &::first-letter {
+                            margin-left: 35px;
+                        }
+                    }
+
+                    .inline-image {
+                        display: inline-block;
+                        width  : 1vh;
+                        filter : hue-rotate(-25deg);
+                    }
+                }
+
+                .main-image {
+                    max-height: 400px;
+                    margin    : 0 10px 10px 10px;
+                    filter    : invert(1) sepia(1) hue-rotate(60deg) saturate(25);
+                }
+            }
+        }
+
+
+        .combat-button {
+            position       : relative;
+            width          : 100%;
+            padding        : 16px 32px;
+            display        : flex;
+            text-align     : center;
+            justify-content: center;
+            align-items    : center;
+            font-family    : "Fallout console";
+            letter-spacing : 1px;
+            font-size      : .6rem;
+            text-shadow    : 1px 1px 3px 1px rgba(0, 0, 0, .4);
+
+            &:hover {
+                color           : white;
+                background-color: rgba(0, 200, 0, 1);
+            }
+        }
+    }
+}
+
+@keyframes slide_left {
+    from {
+        transform: translateX(1500px);
+    }
+
+    30% {
+        transform: translateX(1500px);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fight_bar_text {
+    from {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    to {
+
+        opacity: 1;
+    }
+}
+
+@keyframes combat_left_bar {
+    from {
+        transform: translateX(-4000px);
+    }
+
+    60% {
+        transform: translateX(-4000px);
+    }
+
+    to {
+        transform: translateX(26px);
+    }
+}
+
+@keyframes combat_right_bar {
+    from {
+        transform: translateX(4000px);
+    }
+
+    60% {
+        transform: translateX(4000px);
+    }
+
+    to {
+        transform: translateX(-26px);
+    }
+}
+
+@keyframes combat_player_img {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(200px);
+    }
+}
+
+@keyframes combat_enemy_img {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-200px);
+    }
+}
+
+
+@keyframes vs_animation {
+    from {
+        opacity: 0;
+    }
+
+    30% {
+        opacity  : .5;
+        transform: scale(10);
+    }
+
+    50% {
+        opacity: .65;
+    }
+
+    to {
+        opacity  : 1;
+        transform: scale(1);
+    }
+}

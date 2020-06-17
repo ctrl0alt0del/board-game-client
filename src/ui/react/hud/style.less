@@ -1,0 +1,41 @@
+#hud {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top:0;
+  left: 0;
+  transform-origin: 0 0;
+  #hud-bottom-panel {
+
+    display   : flex;
+    height    : 450px;
+    width     : 90%;
+    margin    : 0 20%;
+    position  : fixed;
+    bottom    : 0;
+    max-height: 30%;
+  }
+
+  #stats_menu_wrapper {
+    display: flex;
+    width  : 75%;
+  }
+
+  #pipboy-container {
+    z-index                : 5;
+    width                  : 25%;
+    border-top-left-radius : 25px;
+    border-top-right-radius: 25px;
+    overflow               : hidden;
+    filter                 : drop-shadow(10px 0px 8px black);
+  }
+}
+
+#fps-counter {
+  font-size       : 24px;
+  color           : black;
+  background-color: white;
+  padding         : 6px 24px;
+  border-radius   : 4px;
+  box-shadow      : 1px 1px 3px 1px rgba(0, 0, 0, .4);
+}

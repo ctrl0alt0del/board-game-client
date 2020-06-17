@@ -1,0 +1,38 @@
+.calculation-breakdown {
+    display    : flex;
+    align-items: center;
+    margin: 0 12px;
+    >* {
+        font-family: "Fallout console";
+        color      : rgb(0, 200, 0);
+    }
+
+    .calculation-breakdown-sign {
+
+        margin: 4px 8px;
+    }
+
+    .calculation-breakdown-value {
+        border: 1px solid rgb(0, 200, 0);
+
+        .calculation-breakdown-value-header {
+            display      : flex;
+            padding      : 2px 4px;
+            border-bottom: 1px solid rgb(0, 200, 0);
+
+            .calculation-breakdown-source-image {
+                width : 1vh;
+                object-fit: contain;
+                margin: 0 3px 0 0;
+                height: 15px;
+            }
+            .calculation-breakdown-source-name{
+                font-size: .5rem;
+            }
+        }
+        .calculation-breakdown-value-number{
+            padding: 4px 0;
+            text-align: center;
+        }
+    }
+}

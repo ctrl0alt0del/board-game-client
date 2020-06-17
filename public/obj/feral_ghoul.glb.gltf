@@ -1,0 +1,27 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.1.46",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "extras" : {
+                "glTF2ExportSettings" : {
+                    "export_animations" : 0,
+                    "export_apply" : 1,
+                    "export_colors" : 0,
+                    "export_current_frame" : 0,
+                    "export_extras" : 1,
+                    "export_format" : "GLTF_EMBEDDED",
+                    "export_materials" : 0,
+                    "export_morph" : 1,
+                    "export_selected" : 1,
+                    "export_skins" : 1,
+                    "export_yup" : 0
+                }
+            },
+            "name" : "Scene"
+        }
+    ]
+}

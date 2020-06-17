@@ -1,0 +1,1 @@
+export type EqFunction<T> = (t1: T) => (t2: T) => boolean;

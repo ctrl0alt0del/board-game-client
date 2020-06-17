@@ -1,0 +1,40 @@
+.ruler-wrapper {
+    width      : 100%;
+    height     : 15px;
+    display    : flex;
+    align-items: flex-end;
+
+    .ruler-item {
+        flex               : 1;
+        height             : 100%;
+        border-width       : 2px;
+        border-bottom-style: solid;
+        display            : flex;
+        justify-content    : center;
+        position           : relative;
+
+        .ruler-index {
+            position: absolute;
+            top     : -25px;
+            left    : 90%;
+        }
+
+        &:first-child {
+            border-left-style: solid;
+        }
+
+        &:last-child {
+            border-right-style: solid;
+        }
+
+        .ruler-sub-item {
+            width : 100%;
+            height: 95%;
+        }
+    }
+
+    .ruler-total {
+        padding  : 0 8px;
+        font-size: .8rem;
+    }
+}
