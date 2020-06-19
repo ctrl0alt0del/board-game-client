@@ -31,11 +31,14 @@ export class GameStateService {
     }
 
     map<T>(mapFn: (state: GameState) => T): Observable<T> {
-        return this.onStateUpdate.pipe(map(mapFn));
+        return this.onStateUpdate.pipe(map(mapFn)); //test
     }
 
     patchChanges(patches: ((state: GameState) => SuperMaybe<GameState>)[], save = true) {
-        const nextState = patches.reduce<GameState>((result, patchFn) => Object.assign({}, Maybe.from(patchFn(result)).orDefault(this.getDefaultState())), this.state);
+        const nextState = patches.reduce<GameState>((result, patchFn) => {
+            const patchedState = Maybe.from(patchFn(result)).orDefault(this.getDefaultState());
+            return Object.assign({}, result, patchedState);
+        }, this.state);
         if (nextState === this.state) {
             throw new Error("GameState have to be immutable.");
         }
@@ -79,7 +82,8 @@ export class GameStateService {
             currentCombat: null,
             sideEffectsResult: {},
             inventory: [],
-            entities: []
+            entities: [],
+            currentDiceCheck: null
         };
     }
 }

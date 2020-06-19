@@ -19,7 +19,7 @@ export class CameraController {
     private _cameraMotionTimerId;
 
     private readonly cameraElevation = cameraPosProportions;
-    readonly camera: PerspectiveCamera = new PerspectiveCamera(this.cameraFov, window.innerWidth / window.innerHeight, 1, 5000);
+    readonly camera: PerspectiveCamera = new PerspectiveCamera(this.cameraFov, window.innerWidth / window.innerHeight, 1, 2000);
 
     constructor() {
         this.initCamera();

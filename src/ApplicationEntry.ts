@@ -32,6 +32,13 @@ import { StdGameFunctionsLib } from './game-logic/game-state-machine/GameTermsLi
 import { UIText } from './ui/texts/UIText.service';
 import { GameEntitiesManager } from './game-logic/GameEntityManager.service';
 import { injectorGet } from './utils/Common.utils';
+import { getGameSettings } from './settings/SettingsGeneral';
+import { ObservableStore } from './state/observables/ObservableStore.model';
+import { getLightsForScene } from './scene/Light.utils';
+import { BehaviorSubject, Subject } from 'rxjs';
+import GameObservableStore from './GameObservableStore';
+import { ArrayUtils } from './utils/Array.utils';
+import { SceneComposer } from './scene/SceneComposer';
 
 @Injectable()
 export class ApplicationEntry {
@@ -52,7 +59,8 @@ export class ApplicationEntry {
         @Inject(GameStateRepository) private repository: GameStateRepository,
         @Inject(GameEntitiesManager) private entities: GameEntitiesManager,
         @Inject(Injector) private injector: Injector,
-        @Inject(UIText) private textes: UIText
+        @Inject(UIText) private textes: UIText,
+        @Inject(SceneComposer) private sceneComposer: SceneComposer
     ) {
 
     }
@@ -80,6 +88,8 @@ export class ApplicationEntry {
             name: 'Дикий гуль'
         })
         this.renderingPipelineService.start();
+        const lights = getLightsForScene(GameObservableStore);
+        lights.subscribe(this.sceneComposer.addArrayByKey('worldLights'))
         await this.textes.loadTextJSON('/txt/ua.json');
         this.testBed();
         this.uiManager.render(linkDefaultComponent)

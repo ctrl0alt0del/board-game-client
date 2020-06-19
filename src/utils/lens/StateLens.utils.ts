@@ -71,7 +71,7 @@ export class LensUtils {
         }
     }
 
-    static key<Model, Key extends keyof Model = keyof Model>(key: Key): Lens<Model, Model[Key]> {
+    static key<Model = any, Key extends keyof Model = keyof Model>(key: Key): Lens<Model, Model[Key]> {
         return {
             get(model) {
                 return Maybe.from(model).map(getByKey(key))

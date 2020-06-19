@@ -2,7 +2,7 @@ import { SuperMaybe, Maybe } from "./fp/Maybe";
 
 export type MapFunction<In, Out = In> = (input: In) => Out;
 
-export const compose = <A, B, C>(f1: MapFunction<A, B>, f2: MapFunction<B, C>): MapFunction<A, C> => {
+export const compose = <A, B, C>(f1: (a: A) => B, f2: (b: B) => C): (a: A) => C => {
     return (a) => f2(f1(a));
 }
 
@@ -35,8 +35,10 @@ export const checkIf = <X>(check: (x: X) => SuperMaybe<X>) => compose(check, isT
 
 export const unzipArgsFor = <A,B,C>(fn: (a: A, b: B) => C) => (args: [A,B]) => fn(...args);
 
-export const constant = <A>(a: A) => (b: A) => a;
+export const constant = <A>(a: A) => (b?: A) => a;
 
 export const whatever = <A>(a?: A) => (b: A) => b;
 
 export const contramapFunction = <A,B,C>(map: (a: B) => A, f: (a: A) => C) => compose(map, f)
+
+export const swapArg = <A,B,C>(f: (a: A) => (b: B) => C) => (b: B) => (a: A) => f(a)(b);

@@ -256,10 +256,12 @@ export class MapService {
     flipTile(tile: Tile) {
         const totalTime = 1400;
         tile.isFlipped = true;
+        tile.startMaterialAnimation();
         let flipTileAnimId = requestAnimationFrames(val => {
             if (val > totalTime) {
                 cancelRequestAnimationFrames(flipTileAnimId);
                 tile.isFlipped = true;
+                tile.stopMaterialAnimation();
             } else {
                 tile.setFOWThreshold(val / totalTime);
             }

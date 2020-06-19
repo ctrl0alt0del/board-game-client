@@ -10,6 +10,7 @@ import { SSAARenderPass } from 'three/examples/jsm/postprocessing/SSAARenderPass
 import { Subject, BehaviorSubject } from "rxjs";
 import { OutlineManagaer } from "./OutliningManager.model";
 import { requestAnimationFrames } from "../utils/Common.utils";
+
 export type OutlineEffectStyle = {
     edgeGlow: number,
     edgeThickness: number,
@@ -57,6 +58,7 @@ export class RenderingPipelineService {
         //this.renderer.shadowMap.autoUpdate = false;
         //this.renderer.physicallyCorrectLights = true;
         this.outlinePass = new OutlinePass(new Vector2(window.innerWidth, window.innerHeight), sceneComposer.scene, cameraCtrl.camera);
+        this.outlinePass.enabled = false;
 
 
         const renderTarget = new WebGLRenderTarget(window.innerWidth, window.innerHeight);
@@ -83,7 +85,6 @@ export class RenderingPipelineService {
         this.frame.next();
     }
     start() {
-        this.sceneComposer.setupLights();
         this.makeFullSpace();
         document.body.appendChild(this.renderer.domElement);
         this.animate();
@@ -105,6 +106,7 @@ export class RenderingPipelineService {
     }
 
     addOutlineObjects(objects: Object3D[], style?: Partial<OutlineEffectStyle>) {
+        this.outlinePass.enabled = true;
         if (!this.outlinePass.selectedObjects.some(obj => obj.uuid === objects[0].uuid)) {
             this.outlinePass.selectedObjects.push(...objects);
             this.applyOutlineStyle(style);
@@ -112,6 +114,9 @@ export class RenderingPipelineService {
     }
     removeOutlineObjects(objects: Object3D[]) {
         this.outlinePass.selectedObjects = this.outlinePass.selectedObjects.filter(object3d => !objects.some(obj => object3d === obj));
+        if(this.outlinePass.selectedObjects.length === 0) {
+            this.outlinePass.enabled = false;
+        }
         this.applyOutlineStyle();
     }
     clearOutline() {

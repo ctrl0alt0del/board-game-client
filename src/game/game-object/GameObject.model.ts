@@ -35,7 +35,7 @@ export abstract class GameObject {
         const object = this.factoryMesh();
         if (this.initialMatrix) {
             object.applyMatrix4(this.initialMatrix);
-            object.updateMatrixWorld();
+            object.updateMatrixWorld(true);
         }
         this._object = object;
     }

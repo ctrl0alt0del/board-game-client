@@ -71,6 +71,7 @@ export class PlayerService {
         if (!player.sector) {
             this.state.patchChanges([state => StateLensFactory.playerSector.set(state, initialSector.toGameState())])
         }
+        return this.player;
     }
 
     putPlayerAt(sector: TileSector) {

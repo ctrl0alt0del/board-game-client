@@ -73,8 +73,8 @@ export class GameInventoryService {
         }, async (injector) => {
             const state = injector.get(GameStateService);
             state.patchChanges([
-                state => StateLensFactory.entities.add(state, active.entity.toGameState()),
-                state => StateLensFactory.getPlayerInventory(playerId).add(state, active.toGameState(playerId, true))
+                StateLensFactory.entities.add(active.entity.toGameState()),
+                StateLensFactory.getPlayerInventory(playerId).add(active.toGameState(playerId, true))
             ]);
         });
     }

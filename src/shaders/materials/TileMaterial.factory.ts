@@ -14,6 +14,7 @@ export class TileMaterial extends ShaderMaterial {
     private _highlightedColors: Color[] = [];
     private timeUpdateId: any;
     private _enableColorHighlight = false;
+    private _time = 0;
     private _forceTileHighlightMode: ForceTileHighlightType = ForceTileHighlightType.Disabled;
 
     constructor(faceTexture: Texture, sectorTexture: Texture, warFogTexture: Texture, cloudTexture: Texture) {
@@ -42,12 +43,20 @@ export class TileMaterial extends ShaderMaterial {
         this.uniforms.cloudTexture.value = cloudTexture;
         this.uniforms.sectorTexture.value = sectorTexture;
         this.uniformsNeedUpdate = true;
-        const startTime = Date.now();
         this.uniforms.shininess.value = 64.0;
+        
+    }
+
+    startTimer() {
+        const startTime = Date.now();
         this.timeUpdateId = requestAnimationFrames(() => {
             this.uniforms.time.value = Date.now() - startTime;
             this.uniformsNeedUpdate = true;
         });
+    }
+
+    stopTimer() {
+        cancelRequestAnimationFrames(this.timeUpdateId);
     }
 
     get highlightedColors() {

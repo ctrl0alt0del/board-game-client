@@ -2,7 +2,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
-const assets = ['obj', 'text', 'fonts', 'models', 'env', 'anim', 'saves', 'sounds', 'txt'];
+const assets = ['obj', 'text', 'fonts', 'models', 'env', 'anim', 'saves', 'sounds', 'txt', "settings"];
 
 module.exports = [
   new ForkTsCheckerWebpackPlugin(),

@@ -18,6 +18,8 @@ import { GameInventoryService } from "./game/active/GameInventory.service";
 import { Maybe } from "./utils/fp/Maybe";
 import { EffectResolverService } from "./game-logic/effects/EffectResolver.service";
 import { GameEntitiesManager } from "./game-logic/GameEntityManager.service";
+import GameObservableStore from "./GameObservableStore";
+import { ObservableStore } from "./state/observables/ObservableStore.model";
 
 const toSector = (selector: (state: GameState) => SectorRef) => (state: GameState, injector: Injector) => injector.get(MapService).getSectorBySectorState(selector(state))
 
@@ -35,10 +37,11 @@ const CreateMapWatcher = new StateWatcher<TileState[]>(async (prevMap, nextMap, 
     }
 }, state => state?.map);
 
-const CreatePlayerMiniature = new StateWatcher<PlayerState>((prevPlayer, nextPlayer, injector) => {
+const CreatePlayerMiniature = new StateWatcher<PlayerState>(async (prevPlayer, nextPlayer, injector) => {
     const playerService = injector.get(PlayerService);
     if (!prevPlayer && nextPlayer) {
-        return playerService.spawnPlayer('player_miniature', nextPlayer);
+        const player = await playerService.spawnPlayer('player_miniature', nextPlayer);
+        ObservableStore.subject<Player>('currentPlayer')(GameObservableStore).next(player);
     }
 }, state => state?.currentPlayer);
 

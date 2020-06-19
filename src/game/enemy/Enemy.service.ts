@@ -21,6 +21,7 @@ import { GameEntity } from "../../game-logic/GameEntity.model";
 import { v4 } from "uuid";
 import { GameEffectLib } from "../../game-logic/effects/GameEffectLib.utils";
 import { GameEntitiesManager } from "../../game-logic/GameEntityManager.service";
+import { StateLensFactory } from "../../utils/lens/StateLens.factory";
 
 @Injectable()
 export class EnemyService {
@@ -32,7 +33,8 @@ export class EnemyService {
         @Inject(CombatService) private combats: CombatService,
         @Inject(PhasesService) private phasesService: PhasesService,
         @Inject(AssetsService) private assets: AssetsService,
-        @Inject(GameEntitiesManager) private entities: GameEntitiesManager
+        @Inject(GameEntitiesManager) private entities: GameEntitiesManager,
+        @Inject(GameStateService) private state: GameStateService
     ) {
         this.phasesService.addOnPhaseEndHandler(phaseData => {
             if (phaseData.name === PhaseType.Scout) {
@@ -77,6 +79,9 @@ export class EnemyService {
             targetEnemy.isActive = spawnAsActive;
             targetEnemy.attachedPosition = this.map.getWorldCenterCoords(MapSector.fromSector(sector));
             this.gameObjectManager.addObject(targetEnemy);
+            //TODO: when combat is restored from state it tries to spawn enemy but also creates a new entity. Fix it
+            //TODO: also enemy effects never become active effects
+            this.state.patchChanges([StateLensFactory.entities.add(targetEnemy.entity.toGameState())])
             targetEnemy.currentSector = sector;
             this.registerPhaseSubscribers(targetEnemy);
         }

@@ -32,6 +32,12 @@ export class Character extends GameObject {
     factoryMesh(): Object3D {
         const charMesh = getNestedMesh(this.characterObject);
         const charMeshGeo = charMesh.geometry as BufferGeometry;
+        charMeshGeo.rotateX(MathUtils.toRad(90));
+        charMeshGeo.rotateY(MathUtils.toRad(45));
+        charMeshGeo.scale(CHARACTER_SCALE, CHARACTER_SCALE, CHARACTER_SCALE);
+        charMeshGeo.translate(0, -10 , 0)
+        const baseGeom = new CylinderBufferGeometry(55, 55, 10, 32);
+        const totalGeo = BufferGeometryUtils.mergeBufferGeometries([charMeshGeo, baseGeom])
         const material = new MeshPhysicalMaterial({
             clearcoat: 1.0,
             clearcoatRoughness: 0.1,
@@ -41,27 +47,13 @@ export class Character extends GameObject {
             skinning: true
         });
         charMesh.material = material;
-        this.characterObject.rotateZ(MathUtils.toRad(-45));
-        charMeshGeo.scale(CHARACTER_SCALE, CHARACTER_SCALE, CHARACTER_SCALE);
-        const baseGeom = new CylinderBufferGeometry(55, 55, 10, 32);
-        baseGeom.rotateX(MathUtils.toRad(90));
+        charMesh.geometry = totalGeo;
+        totalGeo.rotateX(MathUtils.toRad(-90));
         const group = new Group();
         group.renderOrder = ObjectsRenderingOrder.CharacterOrder;
         charMesh.castShadow = true;
         charMesh.renderOrder = ObjectsRenderingOrder.CharacterOrder;
-        const base = new Mesh(baseGeom, new MeshPhysicalMaterial({
-            clearcoat: 1.0,
-            clearcoatRoughness: 0.1,
-            metalness: 0.5,
-            roughness: 0.5,
-            color: 0xffffff,
-            side: DoubleSide
-        }));
-        base.castShadow = true;
-        base.receiveShadow = true;
-        base.renderOrder = ObjectsRenderingOrder.CharacterOrder;
         group.add(charMesh);
-        group.add(base);
         return group;
     }
 

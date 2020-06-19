@@ -10,8 +10,18 @@ export abstract class Either<Error, Value> implements Monad<Value> {
 
     abstract tap(onError: (err: Error) => void, onValue: (value: Value) => void);
 
+    protected abstract unpack(): Value | undefined;
+
     static Throw<Error>(error: Error) {
         return new Left<Error>(error);
+    }
+
+    static returnOnError<A>(a: A) {
+        return <E>(e: Either<E,A>) => e.unpack() || a;
+    }
+
+    static map<A,B>(mapFn: (a: A) => B) {
+        return <E>(e: Either<E, A>) => e.map(mapFn)
     }
 
     static of<Error, Value>(val: Value): Either<Error, Value> {
@@ -49,6 +59,10 @@ class Right<Value> extends Either<any, Value> {
     flatten<C>(this: Right<Either<Error, C>>): Either<Error, C> {
         return this.value;
     }
+
+    unpack() {
+        return this.value;
+    }
 }
 
 class Left<Error> extends Either<Error, any> {
@@ -70,5 +84,9 @@ class Left<Error> extends Either<Error, any> {
 
     flatten<never>(this: Left<Error>): Either<Error, never> {
         return new Left(this.error);
+    }
+
+    unpack() {
+        return undefined as never;
     }
 }

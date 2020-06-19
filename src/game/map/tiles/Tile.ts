@@ -84,9 +84,18 @@ export class Tile extends GameObject {
         material.FOWThreshold = value;
     }
 
+    startMaterialAnimation() {
+        this.getMaterial().startTimer();
+    }
+
+    stopMaterialAnimation() {
+        this.getMaterial().stopTimer();
+    }
+
     enableHighlight() {
         const material = this.getMaterial();
         material.enableColorHighlight = true;
+        material.startTimer();
         if(!this.isFlipped) {
             material.forceTileHighlightMode = ForceTileHighlightType.None;
         }
@@ -94,6 +103,7 @@ export class Tile extends GameObject {
 
     disableHighlight() {
         const material = this.getMaterial();
+        material.stopTimer();
         material.highlightedColors = [];
         material.forceTileHighlightMode = ForceTileHighlightType.Disabled;
         material.enableColorHighlight = false;
@@ -128,18 +138,20 @@ export class Tile extends GameObject {
             color: 0x666666,
             side: DoubleSide
         }));
-        baseMesh.rotateX(MathUtils.toRad(90));
+        baseMesh.rotation.set(MathUtils.toRad(90), MathUtils.toRad(90), 0);
+        faceMesh.rotation.set(0,0,MathUtils.toRad(90));
+        //baseMesh.rotateX(MathUtils.toRad(90));
         baseMesh.translateY(-11);
 
         group.add(baseMesh);
         group.add(faceMesh);
-        group.rotateZ(MathUtils.toRad(90));
+        //group.rotateZ(MathUtils.toRad(90));
         group.translateZ(6)
         faceMesh.renderOrder = ObjectsRenderingOrder.TileOrder;
         baseMesh.renderOrder = ObjectsRenderingOrder.TileOrder;
-        //group.renderOrder = ObjectsRenderingOrder.TileOrder;
         group.name = 'Tile';
         baseMesh.castShadow = true;
+        group.matrixAutoUpdate = false;
         return group;
     }
 
